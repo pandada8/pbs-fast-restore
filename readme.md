@@ -12,7 +12,7 @@ Read chunks in parallel and write to target device in serial
    ```
    modprobe nbd
    qemu-img create -f qcow2 victim.qcow2 100G
-   qemu-nbd -c /dev/nbd0 victim.qcow2 --cache=unsafe --detect-zeroes=unmap
+   qemu-nbd -c /dev/nbd0 victim.qcow2 --cache=unsafe --detect-zeroes=unmap --aio=io_uring
    ```
 
 2. run
