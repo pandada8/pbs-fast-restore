@@ -19,3 +19,8 @@ Read chunks in parallel and write to target device in serial
    ```
    ./pbsfastrestore -src /mnt/datastore/backup/pbs/dev/vm/123/2023-12-31T19:00:06Z/drive-scsi4.img.fidx -dest /dev/nbd0 -chunks /mnt/datastore/backup/pbs/dev/.chunks/ -workers 8
    ```
+
+## TODO
+
+- [ ] handle 0 properly
+- [ ] fallcate for raw file
