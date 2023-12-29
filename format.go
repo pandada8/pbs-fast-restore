@@ -7,6 +7,7 @@ import (
 	"hash/crc32"
 	"io"
 	"os"
+	"sync/atomic"
 
 	"github.com/klauspost/compress/zstd"
 	"github.com/mitchellh/mapstructure"
@@ -64,7 +65,7 @@ var (
 	zstdDecoder, _                       = zstd.NewReader(nil)
 )
 
-func readChunk(pathstr string, chunksize uint64) (payload []byte, err error) {
+func readChunk(pathstr string, chunksize uint64, read *uint64) (payload []byte, err error) {
 	// print(pathstr)
 	_, err = os.Stat(pathstr)
 	if err != nil && os.IsNotExist(err) {
@@ -91,6 +92,7 @@ func readChunk(pathstr string, chunksize uint64) (payload []byte, err error) {
 	if err != nil {
 		return
 	}
+	atomic.AddUint64(read, uint64(len(inputs)+12))
 
 	calced := make([]byte, 4)
 	binary.LittleEndian.PutUint32(calced, crc32.ChecksumIEEE(inputs))
