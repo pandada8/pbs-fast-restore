@@ -12,15 +12,10 @@ Read chunks in parallel and write to target device in serial
    ```
    modprobe nbd
    qemu-img create -f qcow2 victim.qcow2 100G
-   qemu-nbd -c /dev/nbd0 victim.qcow2 --cache=unsafe --discard=unmap
+   qemu-nbd -c /dev/nbd0 victim.qcow2 --cache=unsafe --detect-zeroes=unmap
    ```
 
 2. run
    ```
    ./pbsfastrestore -src /mnt/datastore/backup/pbs/dev/vm/123/2023-12-31T19:00:06Z/drive-scsi4.img.fidx -dest /dev/nbd0 -chunks /mnt/datastore/backup/pbs/dev/.chunks/ -workers 8
    ```
-
-## TODO
-
-- [ ] handle 0 properly
-- [ ] fallcate for raw file
